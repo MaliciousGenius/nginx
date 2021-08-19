@@ -7,3 +7,11 @@ services:
       dockerfile: Dockerfile
     image: maliciousgenius/nginx:latest
     container_name: nginx
+    # command: [nginx, '-g', 'daemon off;']
+    volumes:
+      - ./_nginx_conf:/etc/nginx
+      - ./_nginx_log:/var/log/nginx
+      - ./_nginx_html:/var/www/html
+    ports:
+      - '8080:80/tcp'
+      - '443:443/tcp'

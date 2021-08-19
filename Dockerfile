@@ -62,10 +62,15 @@ RUN apt autoremove --yes ; \
     apt clean ; \
     rm -rf /var/lib/apt/lists/* ;
 
-# backup origin config
-RUN cp -R /etc/bind /etc/bind.orig ;
+# backup origin config & data files
+RUN cp -R /etc/nginx /etc/nginx.origin ; \
+    cp -R /var/www/html /var/www/html.origin ;
 
 # added entrypoint
 COPY entrypoint.sh /entrypont.sh
 ENTRYPOINT ["/entrypont.sh"]
-CMD ["/usr/sbin/named", "-c", "/etc/bind/named.conf"]
+# CMD ["/usr/sbin/nginx", "-g", "'daemon off;'", "-c", "/etc/nginx/nginx.conf"]
+# CMD ["/usr/sbin/nginx", "-c", "/etc/nginx/nginx.conf"]
+
+# expose ports
+EXPOSE 80 443
